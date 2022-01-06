@@ -90,6 +90,13 @@ au BufNewFile,BufRead *.tex
    \ set spell spelllang=en_gb
    \ let g:tex_comment_nospell = 1
 
+function! Formatonsave()
+  let l:formatdiff = 1
+  py3f /opt/homebrew/Cellar/llvm/13.0.0_2/share/clang/clang-format.py
+endfunction
+
+autocmd BufWritePre *.h,*.cc,*.cpp call Formatonsave()
+
 autocmd VimEnter *
             \   if !argc()
             \ |   Startify
@@ -100,3 +107,4 @@ nnoremap <space> za
 let g:tex_conceal=""
 autocmd BufNewFile *.py 0put =\"#!/usr/bin/python\<nl>\"|$
 set clipboard+=unnamedplus
+autocmd FileType tex let b:coc_pairs=["$","$"]
